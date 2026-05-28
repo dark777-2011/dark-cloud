@@ -97,7 +97,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 /* ================= UPLOAD (FIXED) ================= */
-app.post("/upload", auth, upload.single("file"), (req, res) => {
+app.post("/upload", upload.single("file"), (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).send("no file uploaded");
@@ -109,7 +109,7 @@ app.post("/upload", auth, upload.single("file"), (req, res) => {
       id,
       name: req.file.originalname,
       file: req.file.filename,
-      owner: req.user?.id || "unknown",
+      owner: "public",
       time: Date.now()
     };
 
@@ -127,8 +127,8 @@ app.post("/upload", auth, upload.single("file"), (req, res) => {
 });
 
 /* ================= GET USER FILES ================= */
-app.get("/my-files", auth, (req, res) => {
-  res.json(files.filter(f => f.owner === req.user.id));
+app.get("/my-files", (req, res) => {
+  res.json(files);
 });
 
 /* ================= ADMIN ================= */
