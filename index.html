@@ -1031,7 +1031,7 @@ formData.append("file",file);
 
 const xhr = new XMLHttpRequest();
 
-xhr.open("POST","/upload");
+xhr.open("POST","https://dark-cloud.onrender.com/upload");
 
 /* ================= PROGRESS ================= */
 
@@ -1112,6 +1112,7 @@ card.innerHTML += `
 
 };
 
+xhr.setRequestHeader("Authorization", "Bearer YOUR_TOKEN");
 xhr.send(formData);
 
 }
