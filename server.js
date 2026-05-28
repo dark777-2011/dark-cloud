@@ -76,7 +76,7 @@ cb(null,Date.now()+"-"+file.originalname);
 const upload = multer({storage});
 
 /* ================= UPLOAD ================= */
-app.post("/upload",auth,upload.single("file"),(req,res)=>{
+app.post("/upload", upload.single("file"), (req,res)=>{
 
 const id = uuid();
 
@@ -126,5 +126,5 @@ res.download(path.join(UPLOAD_DIR,file.file),file.name);
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log("🚀 SaaS File System running on port " + port);
+  console.log("🚀 running on " + port);
 });
