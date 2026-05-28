@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DARK CLOUD</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+background:
+linear-gradient(rgba(0,0,0,0.90),rgba(0,0,0,0.90)),
+radial-gradient(circle at top,#0ea5e9 0%,transparent 30%),
+#020617;
+color:white;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg-grid{
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+background-size:60px 60px;
+opacity:0.12;
+pointer-events:none;
+}
+
+.glow1{
+position:fixed;
+width:700px;
+height:700px;
+background:#0ea5e9;
+filter:blur(220px);
+opacity:0.13;
+top:-250px;
+left:-250px;
+pointer-events:none;
+}
+
+.glow2{
+position:fixed;
+width:700px;
+height:700px;
+background:#2563eb;
+filter:blur(220px);
+opacity:0.10;
+bottom:-250px;
+right:-250px;
+pointer-events:none;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+height:75px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 35px;
+border-bottom:1px solid rgba(255,255,255,0.05);
+background:rgba(0,0,0,0.25);
+backdrop-filter:blur(20px);
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.status{
+display:flex;
+align-items:center;
+gap:8px;
+padding:10px 16px;
+border-radius:999px;
+background:rgba(14,165,233,0.08);
+border:1px solid rgba(14,165,233,0.15);
+font-size:13px;
+color:#38bdf8;
+}
+
+.dot{
+width:8px;
+height:8px;
+border-radius:50%;
+background:#10b981;
+box-shadow:0 0 10px #10b981;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+font-size:22px;
+font-weight:800;
+}
+
+.logo span{
+color:#38bdf8;
+}
+
+.logo-box{
+width:42px;
+height:42px;
+border-radius:14px;
+background:linear-gradient(135deg,#3b82f6,#06b6d4);
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 0 25px rgba(59,130,246,0.5);
+}
+
+/* ================= MAIN ================= */
+
+.container{
+max-width:1050px;
+margin:auto;
+padding:40px 25px 80px;
+}
+
+/* ================= DISCORD ================= */
+
+.discord-btn{
+width:240px;
+height:65px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:center;
+border:none;
+border-radius:22px;
+background:linear-gradient(90deg,#3b82f6,#06b6d4);
+color:white;
+font-size:24px;
+font-weight:800;
+cursor:pointer;
+transition:0.3s;
+margin-bottom:35px;
+box-shadow:0 0 35px rgba(59,130,246,0.45);
+}
+
+.discord-btn:hover{
+transform:translateY(-5px) scale(1.02);
+}
+
+/* ================= UPLOAD BOX ================= */
+
+.upload-box{
+background:rgba(2,6,23,0.88);
+border:2px dashed rgba(56,189,248,0.3);
+border-radius:35px;
+padding:65px 25px;
+text-align:center;
+transition:0.3s;
+}
+
+.upload-box:hover{
+border-color:#38bdf8;
+box-shadow:0 0 40px rgba(14,165,233,0.08);
+}
+
+.upload-icon{
+width:95px;
+height:95px;
+border-radius:30px;
+background:linear-gradient(145deg,#0f172a,#0b2440);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
+margin:auto;
+margin-bottom:25px;
+border:1px solid rgba(255,255,255,0.06);
+}
+
+.upload-box h1{
+font-size:44px;
+margin-bottom:10px;
+font-weight:800;
+}
+
+.upload-box p{
+color:#94a3b8;
+font-size:17px;
+margin-bottom:28px;
+}
+
+.upload-box p span{
+color:#38bdf8;
+font-weight:bold;
+cursor:pointer;
+}
+
+.tags{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:28px;
+}
+
+.tag{
+padding:10px 18px;
+border-radius:999px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.05);
+font-size:13px;
+color:#94a3b8;
+}
+
+.select-btn{
+height:60px;
+padding:0 35px;
+border:none;
+border-radius:18px;
+background:linear-gradient(90deg,#3b82f6,#06b6d4);
+color:white;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 0 30px rgba(59,130,246,0.4);
+}
+
+.select-btn:hover{
+transform:scale(1.04);
+}
+
+/* ================= STATS ================= */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+margin-top:25px;
+}
+
+.stat{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.05);
+padding:25px;
+border-radius:22px;
+text-align:center;
+}
+
+.stat-title{
+font-size:13px;
+color:#64748b;
+margin-bottom:8px;
+}
+
+.stat-value{
+font-size:38px;
+font-weight:800;
+color:#38bdf8;
+}
+
+/* ================= QUEUE ================= */
+
+.queue-section{
+margin-top:35px;
+}
+
+.queue-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.queue-top h2{
+font-size:24px;
+}
+
+.upload-all-btn{
+height:52px;
+padding:0 28px;
+border:none;
+border-radius:15px;
+background:linear-gradient(90deg,#3b82f6,#06b6d4);
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.upload-all-btn:hover{
+transform:scale(1.04);
+}
+
+.queue-list{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.queue-item{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+border-radius:22px;
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+transition:0.3s;
+}
+
+.queue-item:hover{
+border-color:rgba(56,189,248,0.3);
+}
+
+.queue-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.queue-icon{
+width:58px;
+height:58px;
+border-radius:18px;
+background:#0f172a;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+}
+
+.queue-info h3{
+font-size:18px;
+margin-bottom:3px;
+}
+
+.queue-info p{
+font-size:13px;
+color:#64748b;
+}
+
+.queue-actions{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.waiting{
+padding:8px 16px;
+border-radius:999px;
+background:rgba(234,179,8,0.1);
+color:#facc15;
+font-size:13px;
+}
+
+.remove-btn{
+width:42px;
+height:42px;
+border:none;
+border-radius:12px;
+background:#220a12;
+color:#ef4444;
+font-size:18px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.remove-btn:hover{
+transform:scale(1.08);
+background:#3a0d18;
+}
+
+.empty-queue{
+background:rgba(255,255,255,0.03);
+border:1px dashed rgba(255,255,255,0.08);
+padding:25px;
+border-radius:20px;
+text-align:center;
+color:#64748b;
+}
+
+/* ================= SUCCESS ================= */
+
+.success-box{
+margin-top:30px;
+background:rgba(2,6,23,0.9);
+border:1px solid rgba(16,185,129,0.25);
+border-radius:28px;
+padding:40px;
+text-align:center;
+display:none;
+}
+
+.success-icon{
+font-size:55px;
+margin-bottom:12px;
+}
+
+.success-box h2{
+font-size:38px;
+margin-bottom:10px;
+}
+
+.success-box p{
+color:#94a3b8;
+}
+
+/* ================= FILE LIST ================= */
+
+.file-list{
+margin-top:25px;
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.file-card{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+border-radius:24px;
+padding:20px;
+transition:0.3s;
+}
+
+.file-card:hover{
+transform:translateY(-3px);
+border-color:rgba(56,189,248,0.3);
+}
+
+.file-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.file-name{
+font-size:20px;
+font-weight:700;
+}
+
+.file-size{
+color:#64748b;
+font-size:14px;
+margin-top:5px;
+}
+
+.file-type{
+background:rgba(251,191,36,0.15);
+color:#fbbf24;
+padding:10px 16px;
+border-radius:14px;
+font-size:13px;
+font-weight:bold;
+}
+
+.progress{
+height:10px;
+background:#0f172a;
+border-radius:999px;
+overflow:hidden;
+margin-bottom:18px;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#3b82f6,#06b6d4);
+transition:0.2s;
+border-radius:999px;
+}
+
+.link-box{
+background:#081120;
+border:1px solid rgba(255,255,255,0.06);
+border-radius:18px;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.file-link{
+color:#38bdf8;
+font-size:15px;
+word-break:break-all;
+}
+
+.actions{
+display:flex;
+gap:10px;
+}
+
+.action-btn{
+height:44px;
+padding:0 18px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+}
+
+.copy-btn{
+background:linear-gradient(90deg,#3b82f6,#06b6d4);
+color:white;
+}
+
+.open-btn{
+background:#0f172a;
+border:1px solid rgba(56,189,248,0.2);
+color:#38bdf8;
+}
+
+.action-btn:hover{
+transform:scale(1.04);
+}
+
+/* ================= NEW UPLOAD ================= */
+
+.new-upload{
+margin-top:22px;
+height:78px;
+border-radius:22px;
+border:2px dashed rgba(59,130,246,0.25);
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+font-size:22px;
+font-weight:700;
+color:#cbd5e1;
+transition:0.3s;
+background:rgba(255,255,255,0.02);
+}
+
+.new-upload:hover{
+background:rgba(255,255,255,0.04);
+border-color:#38bdf8;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+position:fixed;
+bottom:25px;
+left:50%;
+transform:translateX(-50%);
+background:#052e1d;
+border:1px solid rgba(16,185,129,0.3);
+padding:14px 24px;
+border-radius:14px;
+font-weight:bold;
+display:none;
+z-index:999;
+}
+
+/* ================= SCROLL ================= */
+
+::-webkit-scrollbar{
+width:8px;
+height:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#0ea5e9;
+border-radius:20px;
+}
+
+input{
+display:none;
+}
+
+@media(max-width:900px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.upload-box h1{
+font-size:30px;
+}
+
+.link-box{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.queue-item{
+flex-direction:column;
+align-items:flex-start;
+gap:15px;
+}
+
+}
+
+
+.clear-btn{
+height:52px;
+padding:0 22px;
+border:none;
+border-radius:15px;
+background:#220a12;
+color:#ef4444;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.clear-btn:hover{
+transform:scale(1.04);
+background:#3a0d18;
+}
+
+footer{
+padding:40px;
+text-align:center;
+color:#888;
+border-top:1px solid rgba(255,255,255,0.06);
+margin-top:100px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg-grid"></div>
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<div class="status">
+<div class="dot"></div>
+Ready
+</div>
+
+<div class="logo">
+<span>CLOUD</span> DARK
+<div class="logo-box">⚡</div>
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="container">
+
+<button class="discord-btn" onclick="window.open('https://discord.gg/M3djUsJf', '_blank')">
+  ادخل الديسكورد
+</button>
+
+<!-- UPLOAD -->
+
+<div class="upload-box" id="dropBox">
+
+<div class="upload-icon">📁</div>
+
+<h1>اسحب ملفاتك هنا</h1>
+
+<p>
+أو
+<span onclick="document.getElementById('fileInput').click()">
+انقر للتصفح
+</span>
+من جهازك — يدعم جميع أنواع الملفات
+</p>
+
+<div class="tags">
+<div class="tag">📦 حتى 70 GB</div>
+<div class="tag">⚡ رفع سريع</div>
+<div class="tag">🔒 آمن</div>
+<div class="tag">∞ ملفات غير محدودة</div>
+</div>
+
+<button class="select-btn"
+onclick="document.getElementById('fileInput').click()">
+تصفح الملفات 📁
+</button>
+
+<input type="file" id="fileInput" multiple>
+
+</div>
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-title">الملفات المحددة</div>
+<div class="stat-value" id="fileCount">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-title">إجمالي الحجم</div>
+<div class="stat-value" id="totalSize">0 KB</div>
+</div>
+
+<div class="stat">
+<div class="stat-title">تم الرفع</div>
+<div class="stat-value" id="uploadedCount">0</div>
+</div>
+
+</div>
+
+<!-- QUEUE -->
+
+<div class="queue-section">
+
+<div class="queue-top">
+
+<h2>📂 قائمة انتظار الرفع</h2>
+
+<button class="clear-btn" onclick="clearQueue()">
+🗑 مسح الكل
+</button>
+
+
+
+</div>
+
+
+
+<div class="queue-list" id="queueList">
+
+<div class="empty-queue" id="emptyQueue">
+لا يوجد ملفات بانتظار الرفع
+</div>
+
+</div>
+
+</div>
+
+<button class="upload-all-btn" onclick="startUpload()">
+⬆ رفع الملفات
+</button>
+
+<!-- SUCCESS -->
+
+<div class="success-box" id="successBox">
+
+<div class="success-icon">🎉</div>
+
+<h2>اكتمل الرفع بنجاح!</h2>
+
+<p>
+روابط التحميل أصبحت جاهزة الآن
+</p>
+
+</div>
+
+<!-- FILES -->
+
+<div class="file-list" id="fileList"></div>
+
+<!-- NEW -->
+
+
+</div>
+
+<footer>
+جميع الحقوق محفوظة ┊ DARK DEV   
+</footer>
+
+<!-- TOAST -->
+
+<div class="toast" id="toast">
+تم نسخ الرابط بنجاح
+</div>
+
+<script>
+
+const fileInput = document.getElementById("fileInput");
+const fileList = document.getElementById("fileList");
+const queueList = document.getElementById("queueList");
+const dropBox = document.getElementById("dropBox");
+
+const successBox = document.getElementById("successBox");
+
+const fileCount = document.getElementById("fileCount");
+const totalSize = document.getElementById("totalSize");
+const uploadedCount = document.getElementById("uploadedCount");
+
+let uploaded = 0;
+let totalFiles = 0;
+let totalBytes = 0;
+
+let uploadQueue = [];
+
+/* ================= COPY ================= */
+
+function copyLink(text){
+
+navigator.clipboard.writeText(text);
+
+const toast = document.getElementById("toast");
+
+toast.style.display = "block";
+
+setTimeout(()=>{
+toast.style.display = "none";
+},2000);
+
+}
+
+/* ================= STATS ================= */
+
+function updateStats(){
+
+fileCount.innerText = totalFiles;
+
+totalSize.innerText =
+(totalBytes / 1024).toFixed(1) + " KB";
+
+uploadedCount.innerText = uploaded;
+
+}
+
+/* ================= FILE SELECT ================= */
+
+fileInput.addEventListener("change",()=>{
+
+const files = fileInput.files;
+
+for(let i=0;i<files.length;i++){
+
+addToQueue(files[i]);
+
+}
+
+});
+
+/* ================= DRAG ================= */
+
+dropBox.addEventListener("dragover",(e)=>{
+e.preventDefault();
+dropBox.style.borderColor="#38bdf8";
+});
+
+dropBox.addEventListener("dragleave",()=>{
+dropBox.style.borderColor="rgba(56,189,248,0.3)";
+});
+
+dropBox.addEventListener("drop",(e)=>{
+
+e.preventDefault();
+
+dropBox.style.borderColor="rgba(56,189,248,0.3)";
+
+const files = e.dataTransfer.files;
+
+for(let i=0;i<files.length;i++){
+
+addToQueue(files[i]);
+
+}
+
+});
+
+/* ================= ADD TO QUEUE ================= */
+
+function addToQueue(file){
+
+document.getElementById("emptyQueue").style.display = "none";
+
+uploadQueue.push(file);
+
+totalFiles++;
+totalBytes += file.size;
+
+updateStats();
+
+const item = document.createElement("div");
+item.className = "queue-item";
+
+item.innerHTML = `
+
+<div class="queue-left">
+
+<div class="queue-icon">
+📦
+</div>
+
+<div class="queue-info">
+<h3>${file.name}</h3>
+<p>${(file.size / 1024).toFixed(1)} KB</p>
+</div>
+
+</div>
+
+<div class="queue-actions">
+
+<div class="waiting">
+⏳ بانتظار الرفع
+</div>
+
+<button class="remove-btn">
+✕
+</button>
+
+</div>
+
+`;
+
+queueList.appendChild(item);
+
+/* REMOVE */
+
+item.querySelector(".remove-btn").onclick = ()=>{
+
+item.remove();
+
+uploadQueue = uploadQueue.filter(f=>f !== file);
+
+totalFiles--;
+totalBytes -= file.size;
+
+updateStats();
+
+if(uploadQueue.length === 0){
+
+document.getElementById("emptyQueue").style.display = "block";
+
+}
+
+};
+
+}
+
+/* ================= START UPLOAD ================= */
+
+function startUpload(){
+
+if(uploadQueue.length === 0){
+
+alert("لا يوجد ملفات للرفع");
+
+return;
+
+}
+
+const filesToUpload = [...uploadQueue];
+
+uploadQueue = [];
+
+queueList.innerHTML = `
+<div class="empty-queue" id="emptyQueue">
+لا يوجد ملفات بانتظار الرفع
+</div>
+`;
+
+filesToUpload.forEach(file=>{
+uploadFile(file);
+});
+
+}
+
+/* ================= UPLOAD FILE ================= */
+
+function uploadFile(file){
+
+const card = document.createElement("div");
+card.className = "file-card";
+
+card.innerHTML = `
+
+<div class="file-top">
+
+<div>
+
+<div class="file-name">
+${file.name}
+</div>
+
+<div class="file-size">
+${(file.size / 1024).toFixed(1)} KB
+</div>
+
+</div>
+
+<div class="file-type">
+${file.name.split(".").pop().toUpperCase()}
+</div>
+
+</div>
+
+<div class="progress">
+<div class="bar"></div>
+</div>
+
+`;
+
+fileList.prepend(card);
+
+const bar = card.querySelector(".bar");
+
+const formData = new FormData();
+// 🔥 تحديد أقصى حجم 10GB
+const MAX_SIZE = 70 * 1024 * 1024 * 1024;
+
+if(file.size > MAX_SIZE){
+
+card.innerHTML += `
+<div style="color:red;margin-top:15px">
+❌ حجم الملف أكبر من 10GB
+</div>
+`;
+
+return;
+}
+
+formData.append("file",file);
+
+const xhr = new XMLHttpRequest();
+
+xhr.open("POST","/upload");
+
+/* ================= PROGRESS ================= */
+
+xhr.upload.onprogress = (e)=>{
+
+let percent = Math.round(
+(e.loaded / e.total) * 100
+);
+
+bar.style.width = percent + "%";
+
+};
+
+/* ================= COMPLETE ================= */
+
+xhr.onload = ()=>{
+
+uploaded++;
+
+updateStats();
+
+successBox.style.display = "block";
+
+try{
+
+const data = JSON.parse(xhr.responseText);
+
+const link = data.url;
+
+card.innerHTML += `
+
+<div class="link-box">
+
+<div class="file-link">
+${window.location.origin + link}
+</div>
+
+<div class="actions">
+
+<button class="action-btn copy-btn"
+onclick="copyLink('${window.location.origin + link}')">
+📋 نسخ الرابط
+</button>
+
+<a href="${link}" target="_blank">
+
+<button class="action-btn open-btn">
+🔗 فتح
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+`;
+
+}catch{
+
+card.innerHTML += `
+<div style="color:red;margin-top:15px">
+فشل رفع الملف
+</div>
+`;
+
+}
+
+};
+
+xhr.onerror = ()=>{
+
+card.innerHTML += `
+<div style="color:red;margin-top:15px">
+فشل الاتصال بالسيرفر
+</div>
+`;
+
+};
+
+xhr.send(formData);
+
+}
+
+/* ================= CLEAR QUEUE ================= */
+
+function clearQueue(){
+
+uploadQueue = [];
+
+queueList.innerHTML = `
+<div class="empty-queue" id="emptyQueue">
+لا يوجد ملفات بانتظار الرفع
+</div>
+`;
+
+totalFiles = 0;
+totalBytes = 0;
+
+updateStats();
+
+}
+
+</script>
+
+</body>
+</html>
