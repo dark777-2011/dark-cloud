@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-const SECRET = "my_secret_key";
+const SECRET = process.env.SECRET || "my_secret_key";
 
 const UPLOAD_DIR = path.join(__dirname, "uploads");
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR);
@@ -123,6 +123,8 @@ res.download(path.join(UPLOAD_DIR,file.file),file.name);
 });
 
 /* ================= COPY LINK ================= */
-app.listen(3000,()=>{
-console.log("🚀 SaaS File System running");
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log("🚀 SaaS File System running on port " + port);
 });
