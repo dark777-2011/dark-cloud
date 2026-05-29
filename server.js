@@ -7,17 +7,39 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { v4: uuid } = require("uuid");
 
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const DiscordStrategy = require("passport-discord").Strategy;
+const session = require("express-session");
+
 const app = express();
 
 /* ================= CORS FIX ================= */
 app.use(cors({
-  origin: "*",
+  origin: "https://dark-cloud-4.onrender.com",
   methods: ["GET", "POST", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(express.json());
 app.use(express.static(__dirname));
+
+app.use(session({
+  secret: "dark_secret",
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
 
 /* ================= SECRET ================= */
 const SECRET = process.env.SECRET || "my_secret_key";
@@ -86,6 +108,72 @@ app.post("/login", async (req, res) => {
   res.json({ token });
 });
 
+/* ================= GOOGLE AUTH ================= */
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "https://dark-cloud-4.onrender.com/auth/google/callback"
+  },
+  (accessToken, refreshToken, profile, done) => {
+
+    return done(null, {
+      id: profile.id,
+      name: profile.displayName,
+      email: profile.emails?.[0]?.value
+    });
+
+  }
+));
+
+app.get("/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"]
+  })
+);
+
+app.get("/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/"
+  }),
+  (req, res) => {
+
+    res.redirect("https://dark-cloud-4.onrender.com/");
+
+  }
+);
+
+/* ================= DISCORD AUTH ================= */
+
+passport.use(new DiscordStrategy({
+    clientID: "1509982149149724914",
+    clientSecret: process.env.DISCORD_CLIENT_SECRET,
+    callbackURL: "https://dark-cloud-4.onrender.com/auth/discord/callback",
+    scope: ["identify", "email"]
+  },
+  (accessToken, refreshToken, profile, done) => {
+    return done(null, {
+      id: profile.id,
+      name: profile.username
+    });
+  }
+));
+
+app.get("/auth/discord",
+  passport.authenticate("discord")
+);
+
+app.get("/auth/discord/callback",
+  passport.authenticate("discord", {
+    failureRedirect: "/"
+  }),
+  (req, res) => {
+
+    res.redirect("https://dark-cloud-4.onrender.com/");
+
+  }
+);
+
 /* ================= MULTER ================= */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, UPLOAD_DIR),
@@ -127,7 +215,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 /* ================= GET USER FILES ================= */
-app.get("/my-files", (req, res) => {
+app.get("/my-files", auth, (req, res) => {
   res.json(files);
 });
 
@@ -160,3 +248,4 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log("🚀 running on port " + port);
 });
+
