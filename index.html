@@ -635,90 +635,6 @@ border-top:1px solid rgba(255,255,255,0.06);
 margin-top:100px;
 }
 
-/* ================= LOGIN ================= */
-
-.auth-box{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.login-btn{
-height:45px;
-padding:0 20px;
-border:none;
-border-radius:14px;
-background:linear-gradient(90deg,#3b82f6,#06b6d4);
-color:white;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
-}
-
-.login-btn:hover{
-transform:scale(1.05);
-}
-
-.user-box{
-display:flex;
-align-items:center;
-gap:10px;
-background:rgba(255,255,255,0.04);
-padding:8px 14px;
-border-radius:14px;
-border:1px solid rgba(255,255,255,0.06);
-}
-
-.logout-btn{
-border:none;
-background:#220a12;
-color:#ef4444;
-padding:8px 12px;
-border-radius:10px;
-cursor:pointer;
-}
-
-.auth-buttons{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.google-login,
-.discord-login{
-height:46px;
-padding:0 18px;
-border:none;
-border-radius:14px;
-display:flex;
-align-items:center;
-gap:10px;
-cursor:pointer;
-font-weight:700;
-transition:0.3s;
-color:white;
-}
-
-.google-login{
-background:#ffffff10;
-border:1px solid rgba(255,255,255,0.08);
-}
-
-.discord-login{
-background:linear-gradient(90deg,#5865F2,#7289da);
-}
-
-.google-login img,
-.discord-login img{
-width:22px;
-height:22px;
-}
-
-.google-login:hover,
-.discord-login:hover{
-transform:translateY(-3px);
-}
-
 </style>
 </head>
 
@@ -740,20 +656,6 @@ Ready
 <div class="logo">
 <span>CLOUD</span> DARK
 <div class="logo-box">⚡</div>
-</div>
-
-<div class="auth-buttons">
-
-<button class="google-login" onclick="loginGoogle()">
-<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-Google
-</button>
-
-<button class="discord-login" onclick="loginDiscord()">
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png">
-Discord
-</button>
-
 </div>
 
 </div>
@@ -903,10 +805,6 @@ let totalBytes = 0;
 
 let uploadQueue = [];
 
-/* ================= AUTH ================= */
-
-
-
 /* ================= COPY ================= */
 
 function copyLink(text){
@@ -1051,7 +949,6 @@ document.getElementById("emptyQueue").style.display = "block";
 
 function startUpload(){
 
-
 if(uploadQueue.length === 0){
 
 alert("لا يوجد ملفات للرفع");
@@ -1077,7 +974,6 @@ uploadFile(file);
 }
 
 /* ================= UPLOAD FILE ================= */
-
 
 function uploadFile(file){
 
@@ -1170,13 +1066,13 @@ card.innerHTML += `
 <div class="link-box">
 
 <div class="file-link">
-${link}
+${window.location.origin + link}
 </div>
 
 <div class="actions">
 
 <button class="action-btn copy-btn"
-onclick="copyLink('${link}')">
+onclick="copyLink('${window.location.origin + link}')">
 📋 نسخ الرابط
 </button>
 
@@ -1216,6 +1112,7 @@ card.innerHTML += `
 
 };
 
+xhr.setRequestHeader("Authorization", "Bearer YOUR_TOKEN");
 xhr.send(formData);
 
 }
@@ -1236,22 +1133,6 @@ totalFiles = 0;
 totalBytes = 0;
 
 updateStats();
-
-}
-
-/* ================= LOGIN ================= */
-
-function loginGoogle(){
-
-window.location.href =
-"https://dark-cloud-4.onrender.com/auth/google";
-
-}
-
-function loginDiscord(){
-
-window.location.href =
-"https://dark-cloud-4.onrender.com/auth/discord";
 
 }
 
